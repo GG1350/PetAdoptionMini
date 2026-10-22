@@ -6,6 +6,7 @@ namespace PetAdoptionMini.Data.Entities
     public class Pet
     {
         public Guid PetId { get; set; }
+        [Required]
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
         [Required]
@@ -15,7 +16,6 @@ namespace PetAdoptionMini.Data.Entities
         [Range(0, int.MaxValue, ErrorMessage = "The age cannot be negative.")]
         public int Age { get; set; }
         public string Description { get; set; } = string.Empty;
-        [Required]
-        public PetStatus Status { get; set; }
+        public PetStatus Status { get; set; } = PetStatus.SearchingForHome;
     }
 }
