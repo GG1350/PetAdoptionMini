@@ -9,7 +9,7 @@ namespace PetAdoptionMini.Data.Entities
 {
     public class Adopter
     {
-        public int AdopterId { get; set; }
+        public Guid AdopterId { get; set; }
         [Required, MaxLength(100)]
         public string Name { get; set; } = string.Empty;
         [Required, EmailAddress, MaxLength(150)]
