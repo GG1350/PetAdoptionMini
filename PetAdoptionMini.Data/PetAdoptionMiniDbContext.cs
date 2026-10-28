@@ -14,7 +14,6 @@ namespace PetAdoptionMini.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Configure the Pet entity
             modelBuilder.Entity<Pet>(entity =>
             {
                 entity.HasKey(p => p.PetId);
