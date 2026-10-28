@@ -16,6 +16,6 @@ namespace PetAdoptionMini.Data.Entities
         public string Email { get; set; } = string.Empty;
         [Phone, MaxLength(30)]
         public string? Phone { get; set; }
-        public ICollection<Pet> AdoptedAnimals { get; set; } = new List<Pet>();
+        public ICollection<Pet> AdoptedPets { get; set; } = new List<Pet>();
     }
 }

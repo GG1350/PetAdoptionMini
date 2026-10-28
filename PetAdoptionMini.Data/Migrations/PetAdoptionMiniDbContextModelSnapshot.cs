@@ -22,10 +22,41 @@ namespace PetAdoptionMini.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.Adopter", b =>
+                {
+                    b.Property<Guid>("AdopterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("AdopterId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Adopters");
+                });
+
             modelBuilder.Entity("PetAdoptionMini.Data.Entities.Pet", b =>
                 {
                     b.Property<Guid>("PetId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AdopterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
@@ -33,13 +64,19 @@ namespace PetAdoptionMini.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("PetSpeciesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ShelterId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Species")
                         .IsRequired()
@@ -51,7 +88,102 @@ namespace PetAdoptionMini.Data.Migrations
 
                     b.HasKey("PetId");
 
+                    b.HasIndex("AdopterId");
+
+                    b.HasIndex("PetSpeciesId");
+
+                    b.HasIndex("ShelterId");
+
                     b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.PetSpecies", b =>
+                {
+                    b.Property<Guid>("PetSpeciesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("PetSpeciesId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("PetSpecies");
+                });
+
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.Shelter", b =>
+                {
+                    b.Property<Guid>("ShelterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Settlement")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ShelterId");
+
+                    b.ToTable("Shelters");
+                });
+
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.Pet", b =>
+                {
+                    b.HasOne("PetAdoptionMini.Data.Entities.Adopter", "Adopter")
+                        .WithMany("AdoptedPets")
+                        .HasForeignKey("AdopterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PetAdoptionMini.Data.Entities.PetSpecies", "PetSpecies")
+                        .WithMany("Pets")
+                        .HasForeignKey("PetSpeciesId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PetAdoptionMini.Data.Entities.Shelter", "Shelter")
+                        .WithMany("Pets")
+                        .HasForeignKey("ShelterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Adopter");
+
+                    b.Navigation("PetSpecies");
+
+                    b.Navigation("Shelter");
+                });
+
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.Adopter", b =>
+                {
+                    b.Navigation("AdoptedPets");
+                });
+
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.PetSpecies", b =>
+                {
+                    b.Navigation("Pets");
+                });
+
+            modelBuilder.Entity("PetAdoptionMini.Data.Entities.Shelter", b =>
+                {
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

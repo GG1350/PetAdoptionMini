@@ -18,8 +18,8 @@ namespace PetAdoptionMini.Data.Entities
         public string Description { get; set; } = string.Empty;
         public PetStatus Status { get; set; } = PetStatus.SearchingForHome;
         [Required]
-        public int PetSpeciesId { get; set; }
-        public PetSpecies? AnimalSpecies { get; set; }
+        public Guid PetSpeciesId { get; set; }
+        public PetSpecies? PetSpecies { get; set; }
 
         [Required]
         public Guid ShelterId { get; set; }
