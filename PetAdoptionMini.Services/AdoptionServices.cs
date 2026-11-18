@@ -25,5 +25,7 @@ namespace PetAdoptionMini.Services
                 .OrderBy(p => p.Name)
                 .ToListAsync(); 
         }
+
+
     }
 }
