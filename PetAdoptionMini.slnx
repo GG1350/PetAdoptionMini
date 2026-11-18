@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="PetAdoptionMini.Data/PetAdoptionMini.Data.csproj" />
+  <Project Path="PetAdoptionMini.Services/PetAdoptionMini.Services.csproj" Id="8efdccbc-201d-427e-a403-51bd7e3e9eaa" />
   <Project Path="PetAdoptionMini.Web/PetAdoptionMini.Web.csproj" Id="def08e4d-de20-4de6-8ce0-585f24da41a5" />
 </Solution>
